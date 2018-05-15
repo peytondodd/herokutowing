@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Incident Report
+{% endblock %}
+
+{% block main %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Tabs - Default functionality</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $( function() {
+	$( "#tabs" ).tabs();
+    } );
+    $(document).ready(function() {
+	$('#goNext').click(function() {
+	    goToNextTab();
+	});
+	$('#goPrev').click(function() {
+	    goToPrevTab();
+	});
+    });
+    </script>
+</head>
+    <form id="incident_report_form" action="/incidentReport" method="post">
+	<div id="tabs">
+	    <ul class="nav-tabs" >
+		<li class="active"><a href="#tabs-1">Customer Information</a></li>
+		<li><a href="#tabs-2">Incident Details</a></li>
+		<li><a href="#tabs-3">Customer Vehicle Details</a></li>
+	    </ul>
+	    <div id="tabs-1">
+		<h3 class="formh3">Customer Information</h3> 
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="name" placeholder="Name" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="address" placeholder="Address" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="phone" placeholder="Phone No." type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="insurancecompany" placeholder="Insurance Company" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="insurancepolicy" placeholder="Insurance Policy No." type="text"/>
+		</div>
+	    </div>
+
+	    <div id="tabs-2">
+		<h3 class="formh3">Incident Details</h3> 
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="pickup" placeholder="Pick-up Location" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="dropoff" placeholder="Drop-off Location" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="crcused" placeholder="CRC Used" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="poundid" placeholder="Pound ID" type="number"/>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="flattire" value="1"> Flat Tire<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="flatbed" value="1"> Flat Bed<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="dollies" value="1"> Dollies<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="boost" value="1"> Battery Boost<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="fuel" value="1"> Fuel Out<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="winch" value="1"> Winch Out<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="lockout" value="1"> Lock Out<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="collision" value="1"> Collision<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="towed" value="1"> Towed<br>
+		</div>
+		<div class="form-group">
+		    <input type="checkbox" name="keys" value="1"> Keys Obtained<br>
+		</div>
+	    </div>
+	    
+	    <div id="tabs-3">
+		<h3 class="formh3">Customer Vehicle Details</h3> 
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="year" placeholder="Year" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="make" placeholder="Make" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="model" placeholder="Model" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="mileage" placeholder="Mileage" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="color" placeholder="Color" type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="licenseplate" placeholder="License Plate No." type="text"/>
+		</div>
+		<div class="form-group">
+		    <input autocomplete="off" autofocus class="input form-control" name="vin" placeholder="VIN No." type="text"/>
+		</div>
+	    </div>
+	</div>
+	<div>
+	    <a class="goPrev" id="goPrev"><img src="https://image.flaticon.com/icons/svg/143/143285.svg" width="50" height="50"></a>
+	    <a class="goNext" id="goNext"><img src="https://image.flaticon.com/icons/svg/143/143286.svg" width="50" height="50"></a>
+	</div>
+	<button class="submit btn btn-primary" type="submit">Submit Report</button>
+    </form>
+
+{% endblock %}

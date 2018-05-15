@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Truck Management
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped" style="width:100%">
+        <tr>
+            <th>id</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Plate No.</th>
+            <th>Operator</th>
+	    <th><a href="/addTruck">+</a></th>
+        </tr>
+    {% for truck in garage %}
+        <tr>
+            <td>{{ truck[0] }}</td>
+            <td>{{ truck[1] }}</td>
+            <td>{{ truck[2] }}</td>
+            <td>{{ truck[3] }}</td>
+            <td>{{ truck[5] }}</td>
+	    <td><div onclick="removeTruck(this)">Remove</div></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

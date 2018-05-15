@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Pound Management
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped" style="width:100%">
+        <tr>
+            <th>id</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Number</th>
+	    <th><a href="/addPound">+</a></th>
+        </tr>
+    {% for pound in pounds %}
+        <tr>
+            <td>{{ pound[0] }}</td>
+            <td>{{ pound[1] }}</td>
+            <td>{{ pound[2] }}</td>
+            <td>{{ pound[3] }}</td>
+	    <td><div onclick="removePound(this)">Remove</div></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

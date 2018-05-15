@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register Company
+{% endblock %}
+
+{% block main %}
+    <form id="company_name_form" action="/getCompanyName" method="post">
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" id="companyidcheck" name="companyid" placeholder="Business Reg. #" type="text" pattern=".{9,9}" maxlength="9" required/>
+	    <button id="checkCompanyButton" class="btn btn-primary" type="submit" disabled>Add Company</button>
+	</div>
+
+    </form>
+
+    <form id="company_info_form" action="/registerCompany" method="post">
+	
+	<div id="companyInfoBlock">
+	    <h3>Company Info</h3> 
+
+	    <div id="companyidtitle">Company #</div>
+
+	    <div class="form-group">
+		<input autocomplete="off" autofocus class="form-control" name="companyname" placeholder="Company Name" type="text"/>
+	    </div>
+
+	    <div class="form-group">
+		<input autocomplete="off" autofocus class="form-control" name="phone" placeholder="Phone Number" type="text"/>
+	    </div>
+
+	    <div class="form-group">
+		<input autocomplete="off" autofocus class="form-control" id="companyid" name="companyid" placeholder="Business Reg. #" type="hidden" pattern=".{9,9}" maxlength="9" required/>
+	    </div>
+
+	</div>
+
+	<div class="h-divider"></div>
+
+	<div id="ownerInfoBlock">
+	    <h3>Owner Registration</h3>
+
+	    <div class="form-group">
+		<input autocomplete="off" autofocus class="form-control" name="firstname" placeholder="First Name" type="text"/>
+	    </div>
+
+	    <div class="form-group">
+		<input autocomplete="off" autofocus class="form-control" name="lastname" placeholder="Last Name" type="text"/>
+	    </div>
+
+	    <div class="form-group">
+		<input autocomplete="off" autofocus class="form-control" name="email" placeholder="Email Address" type="email"/>
+	    </div>
+
+	    <div class="form-group">
+		<input class="form-control" name="password" placeholder="Password" type="password"/>
+	    </div>
+
+	    <div class="form-group">
+		<input class="form-control" name="confirmation" placeholder="Confirm Password" type="password"/>
+	    </div>
+	</div>
+
+	<button class="btn btn-primary" type="submit" disabled>Register</button>
+
+    </form>
+
+{% endblock %}

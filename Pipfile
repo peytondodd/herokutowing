@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+gunicorn = "*"
+Flask-Session = "*"
+"psycopg2-binary" = "*"
+
+[requires]
+python_version = "3.5"
+
+[dev-packages]
+pytest = "*"
+django = "*"
+dj-database-url = "*"
+whitenoise = "*"
+gunicorn = "*"
+twine = "*"
+

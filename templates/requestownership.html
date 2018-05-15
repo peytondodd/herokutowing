@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Request Ownership
+{% endblock %}
+
+{% block main %}
+
+    <div class="messageBox">
+	<div class="x">x</div> 
+	This company is already registered. Please fill out the following form to request being added as an owner.
+    </div>
+    <h3>Request Ownership Form</h3>
+    <form id="request_ownership_form" action="/requestOwnership" method="post">
+	<div id="companyTitleWrapper" class="row">
+	    <div class="col-xs-12 col-sm-12 col-md-12" id="companyNameTitle"></div>
+	</div>
+
+	<div class="h-divider"></div>
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="firstname" placeholder="First Name" type="text" required/>
+	</div>
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="lastname" placeholder="Last Name" type="text" required/>
+	</div>
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="email" placeholder="Email Address" type="email" required/>
+	</div>
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="cell" placeholder="Cell Number" type="text" required/>
+	</div>
+
+	<div class="form-group">
+	    <input class="form-control" name="password" placeholder="Password" type="password" required/>
+	</div>
+
+	<div class="form-group">
+	    <input class="form-control" name="confirmation" placeholder="Confirm Password" type="password" required/>
+	</div>
+
+	<input autocomplete="off" class="form-control" id="companyid" name="companyid" type="hidden" required/>
+
+	<button class="btn btn-primary" type="submit" disabled>Register</button>
+
+    </form>
+{% endblock %}

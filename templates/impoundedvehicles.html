@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Impounded Vehicles
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped" style="width:100%">
+        <tr>
+            <th>Status</th>
+            <th>Year</th>
+	    <th>Make</th>
+	    <th>Model</th>
+            <th>Pound ID</th>
+            <th>Days</th>
+        </tr>
+    {% for vehicle in impounded_vehicles %}
+        <tr>
+	{% if vehicle[0] > 0 %}
+	    <td><img src="https://images-na.ssl-images-amazon.com/images/I/719zM3RmAxL.png" width="14" height="14"></td>
+	{% elif vehicle[0] != 1 %}
+	    <td><img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Chloride-ion-3D-vdW.png" width="14" height="14"></span></td>
+	{% endif %}
+	    <td>{{ vehicle[3] }}</td>
+	    <td>{{ vehicle[4] }}</td>
+	    <td>{{ vehicle[5] }}</td>
+	    <td>{{ vehicle[1] }}</td>
+	    <td>{{ vehicle[2] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

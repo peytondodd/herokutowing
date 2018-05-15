@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Incident Report History
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped" style="width:100%">
+        <tr>
+            <th>Date</th>
+	    <th>Pick-up</th>
+            <th>Drop-off</th>
+            <th>Keys Obtained</th>
+	    <th><a href="/incidentReport">+</a></th>
+        </tr>
+    {% for incident in history %}
+        <tr>
+            <td>{{ incident[1] }}</td>
+            <td>{{ incident[2] }}</td>
+            <td>{{ incident[3] }}</td>
+	{% if incident[14] %}
+	    <td><img src="https://image.flaticon.com/icons/svg/814/814682.svg" class="rotateimg30" juwidth="25" width="25px"></td>
+	{% else %}
+	    <td></td>
+	{% endif %}
+	    <td></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

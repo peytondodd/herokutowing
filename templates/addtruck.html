@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Truck
+{% endblock %}
+
+{% block main %}
+    <form id="truck_info_form" action="/addTruck" method="post">
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="make" placeholder="Make" type="text" required/>
+	</div>
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="model" placeholder="Model" type="text" required/>
+	</div>
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="licenseplate" placeholder="License Plate" type="text" required/>
+	</div>
+	<button class="btn btn-primary" type="submit">Add Truck</button>
+
+    </form>
+{% endblock %}

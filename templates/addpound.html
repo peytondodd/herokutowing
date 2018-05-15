@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Pound
+{% endblock %}
+
+{% block main %}
+    <form id="pound_info_form" action="/addPound" method="post">
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="address" placeholder="Address" type="text" required/>
+	</div>
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="city" placeholder="City" type="text" required/>
+	</div>
+
+	<div class="form-group">
+	    <input autocomplete="off" autofocus class="form-control" name="phone" placeholder="Phone No." type="text" required/>
+	</div>
+
+	<button class="btn btn-primary" type="submit">Add Pound</button>
+
+    </form>
+{% endblock %}
