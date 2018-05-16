@@ -17,7 +17,7 @@ app = Flask(__name__)
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_PERMANENT"] = True
 app.config["SECRET_KEY"] = "b'L\xc7\x9b\xaf:T\x01\xc6;\xbb\xa8W\x8d\xc6A}"
 
 sess = Session()
@@ -298,10 +298,10 @@ def login():
             rows = db.fetchall()
 
         # ensure username exists and password is correct
-        if not check_password_hash(rows[0][2], request.form.get("password")):
-            return apology("Incorrect password", 403)
         if len(rows) !=1:
             return apology("Email not recognized", 403)
+        elif not check_password_hash(rows[0][2], request.form.get("password")):
+            return apology("Incorrect password", 403)
 
         # remember which user has logged in
         userid = rows[0][0]
@@ -470,12 +470,10 @@ def settings():
 def teamManagement():
     """Owner team management page"""
     
-    #companyid = session["companyid"] 
-
     # query for operators in company
     db.execute("""SELECT * FROM operators 
                     WHERE companyid=%s""", 
-            (companyid, ))
+            (session["companyid"], ))
     team = db.fetchall()
 
     # pass team to jinja in html
@@ -1006,9 +1004,9 @@ def updateCoordinates():
     lat = request.args.get("lat")
     lng = request.args.get("lng")
 
-    if 'userid' in session:
+    if 'userid' in session and session["usertype"] == "Operator":
         print("[debug:updateCoords]")
-        print("User ID: " + str(session['userid']))
+        print("Operator ID: " + str(session['userid']))
         print("Latitude: " + lat)
         print("Longitude: " + lng)
 
