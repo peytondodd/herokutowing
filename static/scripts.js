@@ -160,13 +160,19 @@ function configure() {
 		    lat: coords.lat,
 		    lng: coords.lng
 		},
-		success: function() {
+		// return list of active trucks
+		success: function(activetrucks) {
 		    console.log("DEBUG: updateCoordinates (callback:success)");
 		    console.log("Updated coordinates: ");
 		    console.log(coords);
+
+		    console.log("Active trucks: ");
+		    console.log(activetrucks);
+
 		    // Center map to current location
 		    removeTruckMarkers();
-		    drawTruckMarker();
+
+		    drawTruckMarkers(activetrucks);
 		    map.setCenter(coords);
 		},
 		error: function() {
@@ -196,26 +202,43 @@ function configure() {
     }
 }
 
-function drawTruckMarker() {
+let activetrucks = [];
 
-    var image = "/static/truck-35x35.png";
-    truckMarker = new google.maps.Marker({
-	position: coords,
-	map: map,
-	animation: google.maps.Animation.DROP,
-	icon: image,
-	title: 'todo: <operatorinfo>'
+function drawTruckMarkers() {
+
+    // iterate through array of objects returned by updateCoords
+    activetrucks.forEach((element, index, array) => {
+	console.log("TRUCK #" + element.operatorid);
+	console.log("Lat: " + element.lat);
+	console.log("Lng: " + element.lng);
+	console.log("Index: " + index);
+	console.log("Array: " + array);
+
+	coords = { 
+	    element.lat,
+	    element.lng
+	};
+
+	var image = "/static/truck-35x35.png";
+	truckMarker = new google.maps.Marker({
+	    position: coords,
+	    map: map,
+	    animation: google.maps.Animation.DROP,
+	    icon: image,
+	    title: 'todo: <operatorinfo>',
+	    id: operatorid
+	});
+
+	truckMarkers.push(truckMarker);
+
+	truckMarker.addListener('click', function() {
+	    info.open(map, truckMarker);
+	    console.log("Truck #" + truckMarker.id + "clicked");
+	});
+
+	info.setPosition(coords);
+	info.setContent('It\'s me! Mario');
     });
-
-    truckMarkers.push(truckMarker);
-
-    truckMarker.addListener('click', function() {
-	info.open(map, truckMarker);
-    });
-
-    info.setPosition(coords);
-    info.setContent('It\'s me! Mario');
-
 }
 
 

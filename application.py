@@ -1001,6 +1001,7 @@ def map():
 def updateCoordinates():
     """Update truck coordinates in database"""
 
+    activetrucks = []
     lat = request.args.get("lat")
     lng = request.args.get("lng")
 
@@ -1028,8 +1029,12 @@ def updateCoordinates():
     else:
         print("[debug:updateCoords]")
         print("Error updating active_trucks with new coordinates.")
+
+    db.execute("""SELECT * FROM active_trucks;""")
+    activetrucks = db.fetchall()
+
         
-    return "True" 
+    return jsonify(activetrucks)
 
 
 
