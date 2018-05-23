@@ -1,6 +1,7 @@
 // Towing Management Application
 
-// Company ID
+// current user information
+let operatorid;
 companyid = "";
 
 // Google Map
@@ -9,6 +10,7 @@ let map;
 // Markers for map
 let truckMarkers = [];
 let incidentMarkers = [];
+let activetrucks;
 
 // Info window
 let info = new google.maps.InfoWindow();
@@ -96,25 +98,29 @@ function initMap()
 {
     // Styles for map
     // https://developers.google.com/maps/documentation/javascript/styling
-    let styles = [
-	// Hide Google's labels
-	{
-	    featureType: "all",
-	    elementType: "labels",
-	    stylers: [
-	    {visibility: "off"}
-	    ]
-	},
 
-	// Hide roads
-	{
-	    featureType: "road",
-	    elementType: "geometry",
-	    stylers: [
-	    {visibility: "off"}
-	    ]
-	}
-    ];
+    let styles = [ { "elementType": "geometry", "stylers": [ { "color": "#ebe3cd" } ] }, { "elementType": "labels.text.fill", "stylers": [ { "color": "#523735" } ] }, { "elementType": "labels.text.stroke", "stylers": [ { "color": "#f5f1e6" } ] }, { "featureType": "administrative", "elementType": "geometry.stroke", "stylers": [ { "color": "#c9b2a6" } ] }, { "featureType": "administrative.land_parcel", "elementType": "geometry.stroke", "stylers": [ { "color": "#dcd2be" } ] }, { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [ { "color": "#ae9e90" } ] }, { "featureType": "landscape.natural", "elementType": "geometry", "stylers": [ { "color": "#dfd2ae" } ] }, { "featureType": "poi", "elementType": "geometry", "stylers": [ { "color": "#dfd2ae" } ] }, { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [ { "color": "#93817c" } ] }, { "featureType": "poi.business", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [ { "color": "#a5b076" } ] }, { "featureType": "poi.park", "elementType": "labels.text", "stylers": [ { "visibility": "off" } ] }, { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [ { "color": "#447530" } ] }, { "featureType": "road", "elementType": "geometry", "stylers": [ { "color": "#f5f1e6" } ] }, { "featureType": "road.arterial", "elementType": "geometry", "stylers": [ { "color": "#fdfcf8" } ] }, { "featureType": "road.highway", "elementType": "geometry", "stylers": [ { "color": "#f8c967" } ] }, { "featureType": "road.highway", "elementType": "geometry.stroke", "stylers": [ { "color": "#e9bc62" } ] }, { "featureType": "road.highway.controlled_access", "elementType": "geometry", "stylers": [ { "color": "#e98d58" } ] }, { "featureType": "road.highway.controlled_access", "elementType": "geometry.stroke", "stylers": [ { "color": "#db8555" } ] }, { "featureType": "road.local", "elementType": "labels.text.fill", "stylers": [ { "color": "#806b63" } ] }, { "featureType": "transit.line", "elementType": "geometry", "stylers": [ { "color": "#dfd2ae" } ] }, { "featureType": "transit.line", "elementType": "labels.text.fill", "stylers": [ { "color": "#8f7d77" } ] }, { "featureType": "transit.line", "elementType": "labels.text.stroke", "stylers": [ { "color": "#ebe3cd" } ] }, { "featureType": "transit.station", "elementType": "geometry", "stylers": [ { "color": "#dfd2ae" } ] }, { "featureType": "water", "elementType": "geometry.fill", "stylers": [ { "color": "#b9d3c2" } ] }, { "featureType": "water", "elementType": "labels.text.fill", "stylers": [ { "color": "#92998d" } ] } ];
+
+
+//    let styles = [
+//	// Hide Google's labels
+//	{
+//	    featureType: "all",
+//	    elementType: "labels",
+//	    stylers: [
+//	    {visibility: "off"}
+//	    ]
+//	},
+//
+//	// Hide roads
+//	{
+//	    featureType: "road",
+//	    elementType: "geometry",
+//	    stylers: [
+//	    {visibility: "off"}
+//	    ]
+//	}
+//    ];
 
     // map options 
     let options = {
@@ -122,6 +128,7 @@ function initMap()
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         maxZoom: 16,
+	styles: styles,
         panControl: true,
         zoom: 14,
         zoomControl: false
@@ -146,6 +153,19 @@ function configure() {
 	    maximumAge: 0
 	};
 
+	// get user ID
+	$.ajax({
+	    type: 'GET',
+	    url: '/getUserId',
+	    success: function(userid) {
+		console.log("User ID: " + userid);
+		operatorid = userid;
+	    },
+	    error: function() {
+		console.log("Error: session id not returned");
+	    }
+	});
+
 	// watch current coordinates
 	navigator.geolocation.watchPosition(function(position) {
 	    coords = {
@@ -160,9 +180,8 @@ function configure() {
 		    lat: coords.lat,
 		    lng: coords.lng
 		},
-		// return list of active trucks
+		// return list of active trucks (lat,lng,operatorid)
 		success: function(activetrucks) {
-		    console.log("DEBUG: updateCoordinates (callback:success)");
 		    console.log("Updated coordinates: ");
 		    console.log(coords);
 
@@ -202,43 +221,40 @@ function configure() {
     }
 }
 
-let activetrucks = [];
 
-function drawTruckMarkers() {
+function drawTruckMarkers(activetrucks) {
 
-    // iterate through array of objects returned by updateCoords
-    activetrucks.forEach((element, index, array) => {
-	console.log("TRUCK #" + element.operatorid);
-	console.log("Lat: " + element.lat);
-	console.log("Lng: " + element.lng);
-	console.log("Index: " + index);
-	console.log("Array: " + array);
-
-	coords = { 
-	    element.lat,
-	    element.lng
+    // create marker for each active truck
+    for (i=0; i<activetrucks.length; i++) {
+	let id = activetrucks[i][2];
+	let coords = {
+	    lat: parseFloat(activetrucks[i][0]),
+	    lng: parseFloat(activetrucks[i][1])
 	};
-
-	var image = "/static/truck-35x35.png";
+	if (operatorid == id) {
+	    var image = "/static/redtruck-40.png";
+	    var content = "Me!"
+	} else {
+	    var image = "/static/truck-35x35.png";
+	    var content = "Operator ID: " + id;
+	}
 	truckMarker = new google.maps.Marker({
 	    position: coords,
 	    map: map,
 	    animation: google.maps.Animation.DROP,
 	    icon: image,
-	    title: 'todo: <operatorinfo>',
-	    id: operatorid
+	    title: content
 	});
 
 	truckMarkers.push(truckMarker);
 
 	truckMarker.addListener('click', function() {
 	    info.open(map, truckMarker);
-	    console.log("Truck #" + truckMarker.id + "clicked");
 	});
 
 	info.setPosition(coords);
-	info.setContent('It\'s me! Mario');
-    });
+	info.setContent(content);
+    }
 }
 
 

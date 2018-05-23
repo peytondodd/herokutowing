@@ -48,6 +48,17 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+
+@app.route("/getUserId")
+def getUserId():
+    """Send user id to client-side"""
+
+    userid = str(session['userid'])
+    
+    return userid
+
+
+
 @app.route("/getCompanyName", methods=["GET","POST"])
 def getCompanyName():
     """return company name from code"""
@@ -997,6 +1008,7 @@ def map():
     return render_template("map.html")
 
 
+
 @app.route("/updateCoordinates")
 def updateCoordinates():
     """Update truck coordinates in database"""
@@ -1136,14 +1148,17 @@ def updateIncidentReport():
 def logout():
     """Log user out"""
 
-    # Forget any user_id
-    session.clear()
-
     if 'userid' in session:
         db.execute("""DELETE FROM active_users
                       WHERE userid = %s;""", 
                       (session['userid'], )) 
+        db.execute("""DELETE FROM active_trucks
+                      WHERE operatorid = %s;""", 
+                      (session['userid'], )) 
         conn.commit()
+
+    # Forget any user_id
+    session.clear()
 
     # Redirect user to login form
     return redirect("/")
