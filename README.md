@@ -64,3 +64,7 @@
 Subtotal:			      $__.__
 HST:				      $__.__
 Total:				      $__.__				
+
+
+
+NEED TO DO THIS
