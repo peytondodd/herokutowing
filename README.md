@@ -2,26 +2,27 @@
 ***
   
 ##### Retrieve postgreSQL generated details:
-Accident Date
-Operator name
-Operator ID
-Tow truck company Name & No.   ______
-Tow bill invoice No.           ______
-Tow truck company No.          ______
+- accident date
+- operator name
+- operator ID
+- company license no.
+- company name
+- company tele no.
+- invoice no.           ______
   
 ### Customer Information
-Name
-Address
-Phone No.
+- name
+- address
+- phone no.
 
 ### Insurance Information
-- Insurance Co.
-- Policy No.
+- insurance company
+- policy no.
   
 ### Incident Details
-- Pick-up location
-- Drop-off location
-- Collision Reporting Center location
+- pick-up location
+- drop-off location
+- collision Reporting Center location
 
 ##### Accident Description / Damage Check-list
 - flat tire?
@@ -35,29 +36,29 @@ Phone No.
 - tow?
 
 ### Vehicle Information
-- Year
-- Make
-- Model
-- Mileage
-- Color
-- License plate
-- Vehile Identification No.
-- Keys (Y/N)
+- year
+- make
+- model
+- mileage
+- color
+- license plate
+- vehile Identification No.
+- keys (Y/N)
   
 ### Billing Information
 
-- Police redirect (crc required): ($)
-- Environmental cleanup: ($/hr)
-- Recovery: ($)
-- Hourly? ($/hr)
-- Flat? ($)
-- Second truck required? ($/hr)
-- Wait time: <hours> ($/hr x total hours)
-- Distance traveled  ($/km)
-- Re-hook? ($)
-- Towing? ($)
-- Storage? ($/day x total days)
+- police redirect (crc required): ($)
+- environmental cleanup: ($/hr)
+- recovery: ($)
+- hourly? ($/hr)
+- flat? ($)
+- second truck required? ($/hr)
+- wait time: <hours> ($/hr x total hours)
+- distance traveled  ($/km)
+- re-hook? ($)
+- towing? ($)
+- storage? ($/day x total days)
 ----
- Subtotal  ($)
- HST: ($)
- Total: ($)
+- subtotal  ($)
+- HST: ($)
+- total: ($)
